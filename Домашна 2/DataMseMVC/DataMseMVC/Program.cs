@@ -14,6 +14,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 app.UseRouting();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();  
+}); 
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -24,6 +28,11 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=MseData}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}");
 
+app.MapGet("/", (context) =>
+{
+    context.Response.Redirect("/MseData");
+    return Task.CompletedTask;
+});
 app.Run();

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9eGmcs9Lu+ALgtcnK8vjU4lGS62O1vztFE14IL6hY/o=",
+  "Hash": "2is/pBUgqE/do/BL8Eg6ejWxBfyVHmHNGlDEKrzzTgw=",
   "Source": "DataMseMVC",
   "BasePath": "_content/DataMseMVC",
   "Mode": "Default",
@@ -53,6 +53,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\User\\source\\repos\\DataMseMVC\\DataMseMVC\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\DataMseMVC.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\DataMseMVC\\DataMseMVC\\wwwroot\\assets\\arrow_icon.png",
+      "SourceId": "DataMseMVC",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\DataMseMVC\\DataMseMVC\\wwwroot\\",
+      "BasePath": "_content/DataMseMVC",
+      "RelativePath": "assets/arrow_icon.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\arrow_icon.png"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\DataMseMVC\\DataMseMVC\\wwwroot\\assets\\export_icon.png",

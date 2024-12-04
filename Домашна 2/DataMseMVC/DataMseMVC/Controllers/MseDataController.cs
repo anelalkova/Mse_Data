@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 namespace DataMseMVC.Controllers
 {
+    [Route("MseData")]
     public class MseDataController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -16,7 +17,6 @@ namespace DataMseMVC.Controllers
             _httpClient = httpClientFactory.CreateClient();
             _apiBaseUrl = "https://localhost:7295";
         }
-
         public async Task<IActionResult> Index()
         {
             var codes = await GetCodes();
@@ -26,6 +26,7 @@ namespace DataMseMVC.Controllers
         }
 
         // GET: MseDataController
+        [HttpGet("AllData")]
         public async Task<ActionResult> AllData(int page = 1, int pageSize = 10)
         {
             var response = await _httpClient.GetAsync($"{_apiBaseUrl}/api/MseData/GetAllData");
@@ -42,10 +43,10 @@ namespace DataMseMVC.Controllers
             ViewBag.TotalPages = totalPages;
             ViewBag.PageSize = pageSize;
 
-            return View(pagedData);
+            return View("Data", pagedData);
         }
 
-
+        [HttpGet("GetCodes")]
         private async Task<List<string>> GetCodes()
         {
             var response = await _httpClient.GetAsync($"{_apiBaseUrl}/api/MseData/GetCodes");
@@ -57,73 +58,22 @@ namespace DataMseMVC.Controllers
             return data;
         }
 
-        // GET: MseDataController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet("GetDataByCode")]
+        [Route("MseData/GetDataByCode")]
+        public async Task<IActionResult> GetDataByCode([FromQuery] string code)
         {
-            return View();
-        }
-
-        // GET: MseDataController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: MseDataController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            if (string.IsNullOrEmpty(code))
             {
-                return RedirectToAction(nameof(Index));
+                return BadRequest("Code is required.");
             }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: MseDataController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+            var response = await _httpClient.GetAsync($"{_apiBaseUrl}/api/MseData/GetDataByCode?code={code}");
+            response.EnsureSuccessStatusCode();
 
-        // POST: MseDataController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            var content = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<List<MseData>>(content);
 
-        // GET: MseDataController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MseDataController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View("Data", data);
         }
     }
 }

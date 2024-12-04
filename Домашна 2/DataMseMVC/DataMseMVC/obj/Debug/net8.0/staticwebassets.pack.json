@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\DataMseMVC.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\User\\source\\repos\\DataMseMVC\\DataMseMVC\\wwwroot\\assets\\arrow_icon.png",
+      "PackagePath": "staticwebassets\\assets\\arrow_icon.png"
+    },
+    {
       "Id": "C:\\Users\\User\\source\\repos\\DataMseMVC\\DataMseMVC\\wwwroot\\assets\\export_icon.png",
       "PackagePath": "staticwebassets\\assets\\export_icon.png"
     },
