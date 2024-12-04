@@ -34,7 +34,7 @@ namespace DataMseAPI.Repository
             using (var connection = new NpgsqlConnection(_dbSettings.PostgreSQL))
             {
                 await connection.OpenAsync();
-                string sql = "SELECT Code FROM MseData";
+                string sql = "SELECT DISTINCT Code FROM MseData";
 
                 var result = await connection.QueryAsync<String>(sql);
 

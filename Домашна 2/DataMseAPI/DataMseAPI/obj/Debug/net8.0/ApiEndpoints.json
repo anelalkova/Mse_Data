@@ -2,7 +2,7 @@
   {
     "ContainingType": "DataMseAPI.Controllers.MseDataController",
     "Method": "Get",
-    "RelativePath": "api/MseData",
+    "RelativePath": "api/MseData/GetAllData",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -10,24 +10,29 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "DataMseAPI.Controllers.WeatherForecastController",
-    "Method": "Get",
-    "RelativePath": "WeatherForecast",
+    "ContainingType": "DataMseAPI.Controllers.MseDataController",
+    "Method": "GetCodes",
+    "RelativePath": "api/MseData/GetCodes",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DataMseAPI.Controllers.MseDataController",
+    "Method": "GetDataByCode",
+    "RelativePath": "api/MseData/GetDataByCode/{code}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[DataMseAPI.WeatherForecast, DataMseAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
-    "EndpointName": "GetWeatherForecast"
+    "ReturnTypes": []
   }
 ]

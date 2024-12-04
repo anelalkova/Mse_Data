@@ -17,79 +17,21 @@ namespace DataMseAPI.Controllers
             this.mseDataRepository= mseDataRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllData")]
         public async Task<ActionResult> Get()
         {
             return Ok(await this.mseDataRepository.GetAllDataAsync());
         }
 
-   /*     // GET: MseDataController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet("GetCodes")]
+        public async Task<ActionResult> GetCodes()
         {
-            return View();
+            return Ok(await this.mseDataRepository.GetCodesAsync());
         }
-
-        // GET: MseDataController/Create
-        public ActionResult Create()
+        [HttpGet("GetDataByCode")]
+        public async Task<ActionResult>GetDataByCode(string code)
         {
-            return View();
+            return Ok(await this.mseDataRepository.GetDataByCodeAsync(code));
         }
-
-        // POST: MseDataController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MseDataController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: MseDataController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MseDataController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MseDataController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
     }
 }
