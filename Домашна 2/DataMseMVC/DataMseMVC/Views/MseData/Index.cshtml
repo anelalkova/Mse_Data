@@ -1,0 +1,184 @@
+﻿<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h3 class="card-title mb-4 text-center">Select a Code</h3>
+            <p class="text-muted text-center">Choose a code from the dropdown below and submit your selection.</p>
+
+            <form id="codeForm" method="get" action="/MseData/GetDataByCode">
+                <div class="form-group position-relative">
+                    <div class="input-wrapper">
+                        <div class="custom-select-container" tabindex="0">
+                            <div class="custom-select-input">
+                                <span class="placeholder">Select a code...</span>
+                                <span id="arrowIcon" class="arrow-icon transition"></span>
+                            </div>
+                            <ul class="dropdown-list" id="dropdownList">
+                                @foreach (var code in ViewData["Codes"] as SelectList)
+                                {
+                                    <li class="dropdown-item" data-value="@code.Text">@code.Text</li>
+                                }
+                            </ul>
+                            <input type="hidden" id="code" name="code">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button id="submitButton" type="button" class="btn btn-primary btn-lg px-5">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        const customSelectInput = $('.custom-select-input');
+        const dropdownList = $('#dropdownList');
+        const arrowIcon = $('#arrowIcon');
+        const hiddenInput = $('#code');
+        const placeholder = $('.placeholder');
+        let dropdownOpen = false;
+
+        const toggleDropdown = () => {
+            dropdownOpen = !dropdownOpen;
+            if (dropdownOpen) {
+                dropdownList.css('height', dropdownList.get(0).scrollHeight);
+                arrowIcon.css('transform', 'rotate(90deg)');
+            } else {
+                dropdownList.css('height', '0');
+                arrowIcon.css('transform', 'rotate(0deg)');
+            }
+        };
+
+        const closeDropdown = () => {
+            dropdownOpen = false;
+            dropdownList.css('height', '0');
+            arrowIcon.css('transform', 'rotate(0deg)');
+        };
+
+        dropdownList.on('click', '.dropdown-item', function () {
+            const selectedValue = $(this).data('value');
+            const selectedText = $(this).text();
+
+            placeholder.text(selectedText);
+            hiddenInput.val(selectedValue);
+            closeDropdown();
+        });
+
+        customSelectInput.on('click', function () {
+            toggleDropdown();
+        });
+
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.custom-select-container').length) {
+                closeDropdown();
+            }
+        });
+
+        $('#submitButton').on('click', function (e) {
+            e.preventDefault();  
+
+            var code = hiddenInput.val();  
+            if (!code) {
+                alert('Please select a code.');
+                return;
+            }
+
+            $('#codeForm').submit();
+        });
+    });
+</script>
+
+
+
+<style>
+    .transition {
+        transition: transform 0.3s ease;
+    }
+
+    .container {
+        max-width: 600px;
+    }
+
+    .card {
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 50px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .input-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .custom-select-container {
+        position: relative;
+        cursor: pointer;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .custom-select-input {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    .arrow-icon {
+        width: 16px;
+        height: 16px;
+        background: url('/assets/arrow_icon.png') no-repeat center center;
+        background-size: contain;
+        transform: rotate(0deg);
+        pointer-events: none;
+    }
+
+    .dropdown-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        height: 0;
+        overflow: hidden;
+        transition: height 0.3s ease;
+        background-color: #fff;
+        border-top: 1px solid #ced4da;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropdown-item {
+        padding: 15px !important;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+
+    .placeholder {
+        color: black; 
+        font-size: 16px; 
+        line-height: 1.5; 
+        display: inline; 
+        background: none !important; 
+        padding: 0;
+        margin: 0; 
+    }
+
+</style>

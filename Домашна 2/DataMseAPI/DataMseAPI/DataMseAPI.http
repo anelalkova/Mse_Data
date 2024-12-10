@@ -1,0 +1,6 @@
+@DataMseAPI_HostAddress = http://localhost:5249
+
+GET {{DataMseAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
