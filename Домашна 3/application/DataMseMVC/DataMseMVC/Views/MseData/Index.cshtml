@@ -1,0 +1,164 @@
+﻿<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <h3 class="card-title mb-4 text-center">Select a Code</h3>
+            <p class="text-muted text-center">Choose a code from the dropdown below and submit your selection.</p>
+
+            <form id="codeForm" method="get">
+                <div class="form-group position-relative">
+                    <div class="input-wrapper">
+                        <div class="dropdown" style="width: 100%; max-width: 350px; margin: 0 auto;">
+                            <button class="btn btn-light dropdown-toggle w-100 text-start px-3 py-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="placeholder">Select a code...</span>
+                            </button>
+                            <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+                                @foreach (var code in ViewData["Codes"] as SelectList)
+                                {
+                                    <li><a class="dropdown-item" href="#" data-value="@code.Text">@code.Text</a></li>
+                                }
+                            </ul>
+                            <input type="hidden" id="code" name="code">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button id="submitButton" type="button" class="btn btn-primary btn-sm px-4 py-2">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        const dropdownMenu = $('.dropdown-menu');
+        const placeholder = $('.placeholder');
+        const hiddenInput = $('#code');
+
+        dropdownMenu.on('click', '.dropdown-item', function (e) {
+            e.preventDefault();
+            const selectedText = $(this).text();
+            const selectedValue = $(this).data('value');
+
+            placeholder.text(selectedText);
+            hiddenInput.val(selectedValue);
+        });
+
+        $('#submitButton').on('click', function (e) {
+            e.preventDefault();
+
+            const stockCode = hiddenInput.val();
+
+            if (!stockCode) {
+                alert('Please select a code.');
+                return;
+            }
+
+            window.location.href = `/MseData/GetStockAnalysis?request=${encodeURIComponent(stockCode)}`;
+        });
+    });
+</script>
+
+<style>
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    .placeholder {
+        color: #6c757d;
+        font-size: 16px;
+        line-height: 1.5;
+        display: inline;
+        background: none !important;
+        padding: 0;
+        margin: 0;
+    }
+
+    .btn-light {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        color: #495057;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .btn-light .placeholder {
+            color: #6c757d;
+        }
+
+        .btn-light:hover {
+            background-color: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+    .dropdown-menu {
+        max-height: 250px;
+        overflow-y: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        scrollbar-width: thin;
+        scrollbar-color: #6c757d #f8f9fa;
+    }
+
+        .dropdown-menu::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .dropdown-menu::-webkit-scrollbar-thumb {
+            background-color: #6c757d;
+            border-radius: 4px;
+        }
+
+        .dropdown-menu::-webkit-scrollbar-track {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+    .dropdown-item {
+        padding: 12px 20px !important;
+        cursor: pointer;
+        transition: background-color 0.2s ease, padding-left 0.2s ease;
+    }
+
+        .dropdown-item:hover {
+            background-color: #f1f3f5;
+            padding-left: 30px;
+        }
+
+        .dropdown-item:active {
+            background-color: #e9ecef;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 18px;
+        font-size: 14px;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .card {
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .card-body {
+        background-color: #ffffff;
+    }
+
+    .container {
+        max-width: 600px;
+    }
+</style>
