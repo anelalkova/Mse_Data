@@ -1,0 +1,59 @@
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=mseuser
+      - POSTGRES_PASSWORD=msepassword
+      - POSTGRES_DB=msedb
+    ports:
+      - "5432:5432"
+    networks:
+      - mse-network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Password123
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    networks:
+      - mse-network
+
+  api:
+    build:
+      context: ./DataMseAPI/DataMseAPI
+      dockerfile: Dockerfile
+    ports:
+      - "9090:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=msedb;Username=mseuser;Password=msepassword
+    depends_on:
+      - postgres
+    networks:
+      - mse-network
+
+  mvc:
+    build:
+      context: ./DataMseMVC/DataMseMVC
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DataMseContext=Server=sqlserver;Database=DataMseMVC.Data;User Id=sa;Password=YourStrong@Password123;TrustServerCertificate=True
+      - ApiService__BaseUrl=http://api:80
+    depends_on:
+      - sqlserver
+      - api
+    networks:
+      - mse-network
+
+networks:
+  mse-network:
+    driver: bridge
